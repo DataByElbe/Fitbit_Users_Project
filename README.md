@@ -280,7 +280,7 @@ daily_use_percent %>%
 "light user: 1 to 7 days")) +
 	labs(title = "User Types Based on Phone Usage Days")
  <div align="center">
-    <img src="IMG_3414.png" alt="My Plot" width="400"/>
+    <img src="IMG_3415.png" alt="My Plot" width="400"/>
 </div>
 
 ### Conclusions :
