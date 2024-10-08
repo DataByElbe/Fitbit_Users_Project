@@ -111,37 +111,37 @@ sum(duplicated(Steps))
 
 ### Sleep contains 3 duplicates, we can remove these and recheck for verification :
 Sleep <- distinct(Sleep)
-sum(duplicated(Sleep))
+	sum(duplicated(Sleep))
 
 ### Ensure correct name syntax and consistent formatting. Change column names to lowercase :
 Activity <- clean_names(Activity)
-Activity <- rename_with(Activity, tolower)
+	Activity <- rename_with(Activity, tolower)
 Calories <- clean_names(Calories)
-Calories <- rename_with(Calories, tolower)
+	Calories <- rename_with(Calories, tolower)
 Intensities <- clean_names(Intensities)
-Intensities <- rename_with(Intensities, tolower)
+	Intensities <- rename_with(Intensities, tolower)
 Sleep <- clean_names(Sleep)
-Sleep <- rename_with(Sleep, tolower)
+	Sleep <- rename_with(Sleep, tolower)
 Steps <- clean_names(Steps)
-Steps <- rename_with(Steps, tolower)
+	Steps <- rename_with(Steps, tolower)
 
 ### Rename and format dates for consistency : 
 Activity <- Activity %>%
-rename(date = activity_date) %>%
-mutate(date = as_date(date, format = "%m/%d/%Y"))
+	rename(date = activity_date) %>%
+	mutate(date = as_date(date, format = "%m/%d/%Y"))
 Calories <- Calories %>%
-rename(date = activity_day) %>%
-mutate(date = as_date(date, format = "%m/%d/%Y"))
+	rename(date = activity_day) %>%
+	mutate(date = as_date(date, format = "%m/%d/%Y"))
 Intensities <- Intensities %>%
-rename(date = activity_day) %>%
-mutate(date = as_date(date, format = "%m/%d/%Y"))
+	rename(date = activity_day) %>%
+	mutate(date = as_date(date, format = "%m/%d/%Y"))
 Sleep <- Sleep %>%
-separate(sleep_day, into = c("date", "time"), sep = " ", remove = TRUE)
+	separate(sleep_day, into = c("date", "time"), sep = " ", remove = TRUE)
 Sleep <- Sleep %>%
-mutate(date = as_date(date, format = "%m/%d/%Y"))
+	mutate(date = as_date(date, format = "%m/%d/%Y"))
 Steps <- Steps %>%
-rename(date = activity_day) %>%
-mutate(date = as_date(date, format = "%m/%d/%Y"))
+	rename(date = activity_day) %>%
+	mutate(date = as_date(date, format = "%m/%d/%Y"))
 
 ## ANALYZE
 Summary of analysis
@@ -151,31 +151,31 @@ Activity_Sleep <- merge(Activity, Sleep, by = c("id", "date"))
 
 ### Summarize for trend analysis to aid Bellabeats marketing strategy :
 Activity %>%
-select (total_steps, total_distance, sedentary_minutes, calories) %>%
-summary()
+	select (total_steps, total_distance, sedentary_minutes, calories) %>%
+	summary()
 Calories %>%
-select (calories) %>%
-summary()
+	select (calories) %>%
+	summary()
 Intensities %>%
-select (very_active_minutes, fairly_active_minutes, lightly_active_minutes, sedentary_minutes) %>%
-summary()
+	select (very_active_minutes, fairly_active_minutes, lightly_active_minutes, sedentary_minutes) %>%
+	summary()
 Sleep %>%
-select (total_sleep_records, total_minutes_asleep, total_time_in_bed) %>%
-summary()
+	select (total_sleep_records, total_minutes_asleep, total_time_in_bed) %>%
+	summary()
 Steps %>%
-select (step_total) %>%
-summary()
+	select (step_total) %>%
+	summary()
 Activity_Sleep %>%
-select (total_steps, total_distance, very_active_minutes, lightly_active_minutes, sedentary_minutes, calories, total_sleep_records, total_minutes_asleep, total_time_in_bed ) %>%
-summary()
+	select (total_steps, total_distance, very_active_minutes, lightly_active_minutes, sedentary_minutes, 		calories, total_sleep_records, total_minutes_asleep, total_time_in_bed ) %>%
+	summary()
 
 ### Use correlation to see how various activities are related : 
 cor(Activity_Sleep$total_steps, Activity_Sleep$calories, use = "complete.obs")
 
 ### Create correlation matrix to explore more variables :
 correlation_matrix <- Activity_Sleep %>%
-select(total_steps, total_distance, very_active_minutes, lightly_active_minutes, sedentary_minutes, total_minutes_asleep, total_time_in_bed, calories) %>%
-cor(use = "complete.obs")
+	select(total_steps, total_distance, very_active_minutes, lightly_active_minutes, sedentary_minutes, 		total_minutes_asleep, total_time_in_bed, calories) %>%
+	cor(use = "complete.obs")
 
 ### Discoveries from summary :
 - Total steps daily averages to 7638 . The Centers for Disease Control and Prevention (CDC) recommends walking at least 10,000 steps per day (https://www.cdc.gov/pcd/issues/2016/16_0111.htm) 
@@ -190,9 +190,9 @@ Supporting visualizations and key findings
 
 ### Visualize correlation between total steps vs. calories burned :
 ggplot(data = Activity, aes(x = total_steps, y = calories)) + 
-geom_point(color = "#d62d58") + 
-geom_smooth(color = "#db7980") + 
-labs(title = "Total Steps vs. Calories")
+	geom_point(color = "#d62d58") + 
+	geom_smooth(color = "#db7980") + 
+	labs(title = "Total Steps vs. Calories")
 theme_minimal()
 <div align="center">
     <img src="IMG_3409.png" alt="My Plot" width="400"/>
@@ -200,11 +200,11 @@ theme_minimal()
 
 ### Visualize correlation between calories burned vs. very active minutes :
 ggplot(Activity_Sleep, aes(x = very_active_minutes, y = calories)) + 
-geom_point(color = "#d62d58") + 
-geom_smooth(method = "lm", color = "#db7980") + 
-labs(title = "Calories Burned vs. Very Active Minutes", 
-x = "Very Active Minutes", 
-y = "Calories")
+	geom_point(color = "#d62d58") + 
+	geom_smooth(method = "lm", color = "#db7980") + 
+	labs(title = "Calories Burned vs. Very Active Minutes", 
+		x = "Very Active Minutes", 
+		y = "Calories")
 <div align="center">
     <img src="IMG_3410.png" alt="My Plot" width="400"/>
 </div>
@@ -212,11 +212,11 @@ y = "Calories")
 ### Visualize correlation between total minutes asleep vs. total time in bed : 
 visualize_sleep_data <- function(data) {
 ggplot(data, aes(x = total_time_in_bed, y = total_minutes_asleep)) +
-geom_point(color = "#fc9fb7", alpha = 0.5) +  # Points
-geom_smooth(method = "lm", color = "#d62d58") +  # Regression line
-labs(title = "Total Minutes Asleep vs. Total Time in Bed", 
-x = "Total Time in Bed (minutes)", 
-y = "Total Minutes Asleep (minutes)") + 
+	geom_point(color = "#fc9fb7", alpha = 0.5) +  # Points
+	geom_smooth(method = "lm", color = "#d62d58") +  # Regression line
+	labs(title = "Total Minutes Asleep vs. Total Time in Bed", 
+		x = "Total Time in Bed (minutes)", 
+		y = "Total Minutes Asleep (minutes)") + 
 theme_minimal()  
 }
 
@@ -228,13 +228,13 @@ visualize_sleep_data(Sleep)
 
 ### Visualize sleep patterns across days of the week : 
 Activity_Sleep <- Activity_Sleep %>%
-mutate(day_of_week = wday(date, label = TRUE))
-ggplot(Activity_Sleep, aes(x = day_of_week, y = total_minutes_asleep, fill = day_of_week)) + 
-geom_boxplot() + 
-scale_fill_manual(values = c("#d62d58", "#db7980", "#fc9fb7", "#db7980", "#d62d58", "#fc9fb7", "#db7980")) +
-labs(title = "Sleep Patterns Across Days of the Week", 
-x = "Day of the Week", 
-y = "Total Minutes Asleep") +
+	mutate(day_of_week = wday(date, label = TRUE))
+	ggplot(Activity_Sleep, aes(x = day_of_week, y = total_minutes_asleep, fill = day_of_week)) + 
+	geom_boxplot() + 
+	scale_fill_manual(values = c("#d62d58", "#db7980", "#fc9fb7", "#db7980", "#d62d58", "#fc9fb7", "#db7980")) +
+	labs(title = "Sleep Patterns Across Days of the Week", 
+		x = "Day of the Week", 
+		y = "Total Minutes Asleep") +
 theme_minimal() 
 <div align="center">
     <img src="IMG_3412.png" alt="My Plot" width="400"/>
@@ -242,21 +242,21 @@ theme_minimal()
 
 ### Visualize average daily steps by weekday :
 Steps$date <- as.Date(Steps$date)
-Steps <- Steps %>%
-mutate(weekday = weekdays(date))
+	Steps <- Steps %>%
+		mutate(weekday = weekdays(date))
 Steps$weekday <- ordered(Steps$weekday, 
-levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
-weekday_steps <- Steps %>%
-group_by(weekday) %>%
-summarize(daily_steps = mean(step_total, na.rm = TRUE)) %>%
-ggplot(aes(x = weekday, y =daily_steps)) + 
-geom_bar(stat = "identity", fill = "#fc9fb7") +
-labs(title = "Average Daily Steps by Weekday", 
-x = "Day of the Week", 
-y = "Average Steps") +
+	levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+	weekday_steps <- Steps %>%
+	group_by(weekday) %>%
+	summarize(daily_steps = mean(step_total, na.rm = TRUE)) %>%
+		ggplot(aes(x = weekday, y =daily_steps)) + 
+		geom_bar(stat = "identity", fill = "#fc9fb7") +
+		labs(title = "Average Daily Steps by Weekday", 
+			x = "Day of the Week", 
+			y = "Average Steps") +
 theme_minimal() +
-theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Angle for better readability
-print(weekday_steps)
+	theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Angle for better readability
+	print(weekday_steps)
 <div align="center">
     <img src="IMG_3413.png" alt="My Plot" width="400"/>
 </div>
@@ -276,14 +276,14 @@ head(daily_use)
 
 ### Create percentage data frame for better interpretation :
 daily_use_percent <- daily_use %>%
-group_by(user_type) %>%
-summarize(total = n ()) %>%
-mutate(total_percent = total / sum(total),  # Calculate percentages
-labels =  scales::percent(total_percent))
+	group_by(user_type) %>%
+	summarize(total = n ()) %>%
+	mutate(total_percent = total / sum(total),  # Calculate percentages
+	labels =  scales::percent(total_percent))
 
 ### Convert user_type to a factor for better plotting :
 daily_use_percent$user_type <- factor(daily_use_percent$user_type, 
-levels = c("heavy user", "moderate user", "light user"))
+	levels = c("heavy user", "moderate user", "light user"))
 
 ### View the result :
 head(daily_use_percent)
@@ -305,8 +305,8 @@ daily_use_percent %>%
 		position = position_stack(vjust = 0.5)) +
 	scale_fill_manual(values = c("#d62d58", "#db7980", "#fc9fb7"),
 		labels = c("heavy user: 15 to 30 days", 
-"moderate user: 7 to 15 days", 
-"light user: 1 to 7 days")) +
+		"moderate user: 7 to 15 days", 
+		"light user: 1 to 7 days")) +
 	labs(title = "User Types Based on Phone Usage Days")
  <div align="center">
     <img src="IMG_3415.png" alt="My Plot" width="400"/>
