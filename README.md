@@ -7,7 +7,7 @@ We can first get to know the scenario. Bellabeat is a high-tech manufacturer of 
 Let’s dive into each step of the analysis process. 
 
 
-## Prepare
+## PREPARE
 ### Installing packages :
 install.packages("tidyverse")
 install.packages("lubridate")
@@ -64,7 +64,7 @@ str(Sleep)
 str(Steps)
 str(Weight)
 
-## Process
+## PROCESS
 ### Check the number of participants for each data set :
 n_distinct(Activity$Id)
 n_distinct(Calories$Id)
@@ -125,7 +125,7 @@ Steps <- Steps %>%
 rename(date = activity_day) %>%
 mutate(date = as_date(date, format = "%m/%d/%Y"))
 
-## Analyze
+## ANALYZE
 ### Merge the activity and sleep data frames :
 Activity_Sleep <- merge(Activity, Sleep, by = c("id", "date"))
 
@@ -165,7 +165,7 @@ cor(use = "complete.obs")
 - Sedentary minutes on average is 991 minutes (~17 hours) . This is too high 
 - Calories and very active minutes have high correlation 
 
-## Share
+## SHARE
 ### Visualize correlation between total steps vs. calories burned :
 ggplot(data = Activity, aes(x = total_steps, y = calories)) + 
 geom_point(color = "#d62d58") + 
