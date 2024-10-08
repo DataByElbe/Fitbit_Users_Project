@@ -4,7 +4,7 @@ Here is an overview of my Capstone Project as a part of the Google Data Analytic
 
 We can first get to know the scenario. Bellabeat is a high-tech manufacturer of health-focused products for women. Collecting data on activity, sleep, stress, and reproductive health has allowed the company to empower women with knowledge about their health and habits. I will be focusing on Bellabeat’s app, analyzing smart device data trends to gain insight into how consumers use their smart devices. The results of the analysis will yield growth opportunities and high-level recommendations for the company. 
 
-Let’s dive into each step of the analysis process. 
+Let’s dive into each step of the analysis process:
 
 ## ASK
 Clear summary of the business task and key stakeholders
