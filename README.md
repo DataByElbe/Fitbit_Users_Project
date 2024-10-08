@@ -6,8 +6,24 @@ We can first get to know the scenario. Bellabeat is a high-tech manufacturer of 
 
 Let’s dive into each step of the analysis process. 
 
+## ASK
+Clear summary of the business task and key stakeholders
+
+- What are some trends in smart device usage?
+- How could these trends apply to Bellabeat customers?
+- How could these trends help influence Bellabeat marketing strategy?
+
+Business Task: 
+- Analyze smart device data to identify trends in consumer usage and preferences to guide Bellabeat in improving their marketing strategy and product development.
+
+Stakeholders: 
+- Urška Sršen: Cofounder and Chief Creative Officer.
+- Sando Mur: Cofounder and key member of the executive team.
+- Bellabeat’s Marketing Analytics Team: Team of data analysts.
 
 ## PREPARE
+Description of all data sources used
+
 ### Installing packages :
 install.packages("tidyverse")
 install.packages("lubridate")
@@ -65,6 +81,8 @@ str(Steps)
 str(Weight)
 
 ## PROCESS
+Documentation of any cleaning or manipulation of data
+
 ### Check the number of participants for each data set :
 n_distinct(Activity$Id)
 n_distinct(Calories$Id)
@@ -126,6 +144,8 @@ rename(date = activity_day) %>%
 mutate(date = as_date(date, format = "%m/%d/%Y"))
 
 ## ANALYZE
+Summary of analysis
+
 ### Merge the activity and sleep data frames :
 Activity_Sleep <- merge(Activity, Sleep, by = c("id", "date"))
 
@@ -166,6 +186,8 @@ cor(use = "complete.obs")
 - Calories and very active minutes have high correlation 
 
 ## SHARE
+Supporting visualizations and key findings
+
 ### Visualize correlation between total steps vs. calories burned :
 ggplot(data = Activity, aes(x = total_steps, y = calories)) + 
 geom_point(color = "#d62d58") + 
@@ -297,6 +319,8 @@ daily_use_percent %>%
 - On Tuesdays and Saturday, users reach above 8000 steps on average 
 
 ## ACT
+High-level recommendations based on analysis
+
 ### Recommendations for Bellabeat :
 - Bellabeat could introduce personalized step and activity goals based on user behavior clusters. For example, users who are part of the low activity/low sleep group could get motivational messages encouraging small increases in activity. High performers could receive more advanced challenges 
 - To help users improve their sleep, Bellabeat could consider customized reminders that it’s time to sleep 
