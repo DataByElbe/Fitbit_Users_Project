@@ -166,7 +166,8 @@ Steps %>%
 	select (step_total) %>%
 	summary()
 Activity_Sleep %>%
-	select (total_steps, total_distance, very_active_minutes, lightly_active_minutes, sedentary_minutes, 		calories, total_sleep_records, total_minutes_asleep, total_time_in_bed ) %>%
+	select (total_steps, total_distance, very_active_minutes, lightly_active_minutes, sedentary_minutes, calories, total_sleep_records, total_minutes_asleep, 	
+ 	total_time_in_bed ) %>%
 	summary()
 
 ### Use correlation to see how various activities are related : 
@@ -174,7 +175,7 @@ cor(Activity_Sleep$total_steps, Activity_Sleep$calories, use = "complete.obs")
 
 ### Create correlation matrix to explore more variables :
 correlation_matrix <- Activity_Sleep %>%
-	select(total_steps, total_distance, very_active_minutes, lightly_active_minutes, sedentary_minutes, 		total_minutes_asleep, total_time_in_bed, calories) %>%
+	select(total_steps, total_distance, very_active_minutes, lightly_active_minutes, sedentary_minutes,total_minutes_asleep, total_time_in_bed, calories) %>%
 	cor(use = "complete.obs")
 
 ### Discoveries from summary :
@@ -324,8 +325,9 @@ High-level recommendations based on analysis
 ### Recommendations for Bellabeat :
 - Personalization: Bellabeat could introduce personalized step and activity goals based on user behavior clusters. For example, users who are part of the low activity/low sleep group could get motivational messages encouraging small increases in activity. High performers could receive more advanced challenges 
 - Reminders: To help users improve their sleep, Bellabeat could consider customized reminders that it’s time to sleep 
-- National Weekly Reports: Bellabeat could enhance engagement with weekly reports comparing users’ activity data across weekdays vs. weekends to encourage consistent habits 
--Segmented User Campaigns: Bellabeat could create marketing campaigns targeting specific user segments such as heavy users to promote advanced features, while engaging light users with content encouraging more frequent use of the app
+- National Weekly Reports: Bellabeat could enhance engagement with weekly reports comparing users’ activity data across weekdays vs. weekends to encourage consistent habits.
+- Rewards: Incentives such as next month subscription free for top active 5% users could be used as motivation to increase activity, further improving health 
+- Segmented User Campaigns: Bellabeat could create marketing campaigns targeting specific user segments such as heavy users to promote advanced features, while engaging light users with content encouraging more frequent use of the app
 - Integrating Social Features: Encouraging sharing of goals and achievements such as steps/sleep could increase user motivation. Implementing challenges between friends could also engage more users. 
 - Collaboration: Bellabeat could explore integrating with other platforms like Apple Health for a seamless experience to increase the value of their app
 - User Feedback: Adding a feedback mechanism for users to report how accurate or helpful they found their activity or sleep recommendations might help Bellabeat refine its algorithm and make the app more user-centric. 
