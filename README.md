@@ -165,6 +165,9 @@ geom_point(color = "#d62d58") +
 geom_smooth(color = "#db7980") + 
 labs(title = "Total Steps vs. Calories")
 theme_minimal()
+<div align="center">
+    <img src="IMG_3409.png" alt="My Plot" width="400"/>
+</div>
 
 ### Visualize correlation between calories burned vs. very active minutes :
 ggplot(Activity_Sleep, aes(x = very_active_minutes, y = calories)) + 
@@ -173,6 +176,9 @@ geom_smooth(method = "lm", color = "#db7980") +
 labs(title = "Calories Burned vs. Very Active Minutes", 
 x = "Very Active Minutes", 
 y = "Calories")
+<div align="center">
+    <img src="IMG_3410.png" alt="My Plot" width="400"/>
+</div>
 
 ### Visualize correlation between total minutes asleep vs. total time in bed : 
 visualize_sleep_data <- function(data) {
@@ -187,6 +193,9 @@ theme_minimal()
 
 ### Call the function to create the plot : 
 visualize_sleep_data(Sleep)
+<div align="center">
+    <img src="IMG_3411.png" alt="My Plot" width="400"/>
+</div>
 
 ### Visualize sleep patterns across days of the week : 
 Activity_Sleep <- Activity_Sleep %>%
@@ -198,6 +207,9 @@ labs(title = "Sleep Patterns Across Days of the Week",
 x = "Day of the Week", 
 y = "Total Minutes Asleep") +
 theme_minimal() 
+<div align="center">
+    <img src="IMG_3412.png" alt="My Plot" width="400"/>
+</div>
 
 ### Visualize average daily steps by weekday :
 Steps$date <- as.Date(Steps$date)
@@ -216,6 +228,9 @@ y = "Average Steps") +
 theme_minimal() +
 theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Angle for better readability
 print(weekday_steps)
+<div align="center">
+    <img src="IMG_3413.png" alt="My Plot" width="400"/>
+</div>
 
 ### Create user type categories based on number of phone usage days :
 daily_use <- Activity_Sleep %>%
@@ -264,6 +279,9 @@ daily_use_percent %>%
 "moderate user: 7 to 15 days", 
 "light user: 1 to 7 days")) +
 	labs(title = "User Types Based on Phone Usage Days")
+ <div align="center">
+    <img src="IMG_3414.png" alt="My Plot" width="400"/>
+</div>
 
 ### Conclusions :
 - The analysis presents a strong positive correlation between steps and calories burned. Users who are more active and take more steps tend to burn more calories. This insight supports Bellabeat’s activity tracking feature, emphasizing daily step goals to enhance calorie burn 
