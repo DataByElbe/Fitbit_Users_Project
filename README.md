@@ -279,7 +279,7 @@ head(daily_use)
 daily_use_percent <- daily_use %>%
 	group_by(user_type) %>%
 	summarize(total = n ()) %>%
-	mutate(total_percent = total / sum(total),  # Calculate percentages
+	mutate(total_percent = total / sum(total),  
 	labels =  scales::percent(total_percent))
 
 ### Convert user_type to a factor for better plotting :
