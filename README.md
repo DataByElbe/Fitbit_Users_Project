@@ -159,40 +159,63 @@ cor(use = "complete.obs")
 - Calories and very active minutes have high correlation 
 
 ## Share
-### Create visualization to observe correlation between total steps taken and calories burned :
+### Visualize correlation between total steps vs. calories burned :
 ggplot(data = Activity, aes(x = total_steps, y = calories)) + 
-geom_point() + geom_smooth() + 
+geom_point(color = "#d62d58") + 
+geom_smooth(color = "#db7980") + 
 labs(title = "Total Steps vs. Calories")
+theme_minimal()
 
-### Create visualization to observe correlation between very active minutes and calories burned :
+### Visualize correlation between calories burned vs. very active minutes :
 ggplot(Activity_Sleep, aes(x = very_active_minutes, y = calories)) + 
-geom_point() + geom_smooth(method = "lm", color = "red") + 
+geom_point(color = "#d62d58") + 
+geom_smooth(method = "lm", color = "#db7980") + 
 labs(title = "Calories Burned vs. Very Active Minutes", 
 x = "Very Active Minutes", 
 y = "Calories")
 
-### Create visualization to observe correlation between minutes in bed and total minutes asleep : 
+### Visualize correlation between total minutes asleep vs. total time in bed : 
 visualize_sleep_data <- function(data) {
 ggplot(data, aes(x = total_time_in_bed, y = total_minutes_asleep)) +
-geom_point(color = "blue", alpha = 0.5) +  # Points
-geom_smooth(method = "lm", color = "red") +  # Regression line
+geom_point(color = "#fc9fb7", alpha = 0.5) +  # Points
+geom_smooth(method = "lm", color = "#d62d58") +  # Regression line
 labs(title = "Total Minutes Asleep vs. Total Time in Bed", 
 x = "Total Time in Bed (minutes)", 
 y = "Total Minutes Asleep (minutes)") + 
-theme_minimal()  # Minimal theme for better aesthetics
+theme_minimal()  
 }
 
 ### Call the function to create the plot : 
 visualize_sleep_data(Sleep)
 
-### Create visualization to observe sleep per weekday to highlight variations in sleep patterns : 
+### Visualize sleep patterns across days of the week : 
 Activity_Sleep <- Activity_Sleep %>%
 mutate(day_of_week = wday(date, label = TRUE))
-ggplot(Activity_Sleep, aes(x = day_of_week, y = total_minutes_asleep)) + 
+ggplot(Activity_Sleep, aes(x = day_of_week, y = total_minutes_asleep, fill = day_of_week)) + 
 geom_boxplot() + 
+scale_fill_manual(values = c("#d62d58", "#db7980", "#fc9fb7", "#db7980", "#d62d58", "#fc9fb7", "#db7980")) +
 labs(title = "Sleep Patterns Across Days of the Week", 
 x = "Day of the Week", 
-y = "Total Minutes Asleep")
+y = "Total Minutes Asleep") +
+theme_minimal() 
+
+### Visualize average daily steps by weekday :
+Steps$date <- as.Date(Steps$date)
+Steps <- Steps %>%
+mutate(weekday = weekdays(date))
+Steps$weekday <- ordered(Steps$weekday, 
+levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+weekday_steps <- Steps %>%
+group_by(weekday) %>%
+summarize(daily_steps = mean(step_total, na.rm = TRUE)) %>%
+ggplot(aes(x = weekday, y =daily_steps)) + 
+geom_bar(stat = "identity", fill = "#fc9fb7") +
+labs(title = "Average Daily Steps by Weekday", 
+x = "Day of the Week", 
+y = "Average Steps") +
+theme_minimal() +
+theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Angle for better readability
+print(weekday_steps)
 
 ### Create user type categories based on number of phone usage days :
 daily_use <- Activity_Sleep %>%
@@ -203,15 +226,16 @@ daily_use <- Activity_Sleep %>%
 		total_days_used > 7 & total_days_used <= 15 ~ "moderate user",
 		total_days_used > 15 ~ "heavy user"
 ))
+
 ### View the result :
 head(daily_use)
 
 ### Create percentage data frame for better interpretation :
 daily_use_percent <- daily_use %>%
-	group_by(user_type) %>%
-	summarize(total = n ()) %>%
-	mutate(total_percent = total / sum(total),  # Calculate percentages
-		labels =  scales::percent(total_percent))
+group_by(user_type) %>%
+summarize(total = n ()) %>%
+mutate(total_percent = total / sum(total),  # Calculate percentages
+labels =  scales::percent(total_percent))
 
 ### Convert user_type to a factor for better plotting :
 daily_use_percent$user_type <- factor(daily_use_percent$user_type, 
@@ -220,7 +244,7 @@ levels = c("heavy user", "moderate user", "light user"))
 ### View the result :
 head(daily_use_percent)
 
-### Create visualization to observe user type based on phone usage : 
+### Visualize user type based on phone usage : 
 daily_use_percent %>%
 	ggplot(aes(x = "", y = total_percent, fill = user_type)) +
 	geom_bar(stat = "identity", width = 1) +
@@ -240,24 +264,6 @@ daily_use_percent %>%
 "moderate user: 7 to 15 days", 
 "light user: 1 to 7 days")) +
 	labs(title = "User Types Based on Phone Usage Days")
-
-### Visualize steps per weekday :
-Steps$date <- as.Date(Steps$date)
-Steps <- Steps %>%
-mutate(weekday = weekdays(date))
-Steps$weekday <- ordered(Steps$weekday, 
-levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
-weekday_steps <- Steps %>%
-group_by(weekday) %>%
-summarize(daily_steps = mean(step_total, na.rm = TRUE)) %>%
-ggplot(aes(x = weekday, y =daily_steps)) + 
-geom_bar(stat = "identity", fill = "skyblue") +
-labs(title = "Average Daily Steps by Weekday", 
-x = "Day of the Week", 
-y = "Average Steps") +
-theme_minimal()
-theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Angle for better readability
-print(weekday_steps)
 
 ### Conclusions :
 - The analysis presents a strong positive correlation between steps and calories burned. Users who are more active and take more steps tend to burn more calories. This insight supports Bellabeat’s activity tracking feature, emphasizing daily step goals to enhance calorie burn 
